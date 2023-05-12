@@ -1,0 +1,55 @@
+syntax = "proto3";
+
+package dropperv1;
+
+option go_package = "github.com/dwelch0/grpc-practice/dropper-service";
+
+/// A struct describing a file item to be updated on the target.
+message FileItem {
+    /// File destination path
+    string path = 1;
+    /// File contents (bytes)
+    bytes contents = 2;
+    /// File Permissions
+    uint32 permissions = 3;
+    /// File owner (user id)
+    string user = 4;
+    /// File group (group id)
+    string group = 5;
+    /// Shell command to run on file change
+    string command = 6;
+}
+
+/// A watch request, parameters are derived from client identity.
+message WatchRequest {}
+
+/// A message sent from the watch stream.
+message WatchResponse {
+    /// Sent when the client has reconnected or fallen behind.
+    /// Contains the whole list of files.
+    message OpSync {
+        repeated FileItem items = 1;
+    }
+
+    /// Sent when a single file entry has been updated.
+    message OpUpdate {
+        FileItem item = 1;
+    }
+
+    /// Sent when a single file entry has been removed.
+    message OpRemove {
+        string path = 1;
+    }
+
+    /// The possible message types sent during a watch session.
+    oneof op {
+        OpSync sync = 1;
+        OpUpdate update = 2;
+        OpRemove remove = 3;
+    }
+}
+
+/// Dropper service provides an op stream.
+service DropperService {
+    rpc Watch(WatchRequest) returns (stream WatchResponse);
+}
