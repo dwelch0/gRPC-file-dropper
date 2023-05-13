@@ -2,9 +2,9 @@
 // versions:
 // - protoc-gen-go-grpc v1.2.0
 // - protoc             v3.21.12
-// source: dropper_service/dropper.proto
+// source: file_dropper/dropper.proto
 
-package dropper_service
+package file_dropper
 
 import (
 	context "context"
@@ -128,5 +128,5 @@ var DropperService_ServiceDesc = grpc.ServiceDesc{
 			ServerStreams: true,
 		},
 	},
-	Metadata: "dropper_service/dropper.proto",
+	Metadata: "file_dropper/dropper.proto",
 }
