@@ -5,6 +5,7 @@ import (
 	"sync"
 	"time"
 
+	"github.com/dwelch0/gRPC-practice/file_dropper/client"
 	"github.com/dwelch0/gRPC-practice/file_dropper/server"
 )
 
@@ -22,4 +23,6 @@ func main() {
 	wg.Wait()
 
 	time.Sleep(time.Duration(time.Second * 5))
+
+	client.Run()
 }
