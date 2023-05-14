@@ -17,8 +17,8 @@ type dropperServiceServer struct {
 }
 
 // server implementation of server-side streaming rpc
-func (s *dropperServiceServer) Watch(req *fd.WatchRequest, stream fd.DropperService_WatchServer) error {
-	// initial message after connection should always be `OpSync`
+func (s *dropperServiceServer) Watch(_ *fd.WatchRequest, stream fd.DropperService_WatchServer) error {
+	// initial response after connection is always `OpSync`
 	wr := &fd.WatchResponse{}
 	wr.Op = &fd.WatchResponse_Sync{
 		Sync: &fd.WatchResponse_OpSync{
