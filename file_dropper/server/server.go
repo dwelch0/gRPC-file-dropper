@@ -68,7 +68,7 @@ func (s *dropperServiceServer) Watch(_ *fd.WatchRequest, stream fd.DropperServic
 		if err := stream.Send(wr); err != nil {
 			return nil
 		}
-		log.Printf("%s type WatchResponse sent/n", wrType)
+		log.Printf("%s type WatchResponse sent\n", wrType)
 
 		time.Sleep(time.Duration(time.Second * 10))
 	}

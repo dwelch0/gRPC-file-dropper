@@ -39,16 +39,16 @@ func processWatch(client fd.DropperServiceClient) error {
 		// determine op and execute concurrently
 		switch op := wr.Op.(type) {
 		case *fd.WatchResponse_Sync:
-			log.Printf("Received sync operation: %v", op.Sync)
+			log.Printf("Received sync operation:\n %v\n", op.Sync)
 			go fo.synchronize(op.Sync.Items)
 		case *fd.WatchResponse_Update:
-			log.Printf("Received update operation: %v", op.Update)
+			log.Printf("Received update operation:\n %v\n", op.Update)
 			go fo.update(op.Update.Item)
 		case *fd.WatchResponse_Remove:
-			log.Printf("Received remove operation: %v", op.Remove)
+			log.Printf("Received remove operation:\n %v\n", op.Remove)
 			go fo.remove(op.Remove.Path)
 		default:
-			log.Printf("Received unknown operation: %v", op)
+			log.Printf("Received unknown operation:\n %v\n", op)
 		}
 	}
 	return nil
@@ -133,7 +133,7 @@ func (fo *fileOpOrchestrator) remove(path string) error {
 	return nil
 }
 
-func Run() error {
+func Run(workdir string) error {
 	serverAddr := flag.String("addr", "localhost:50051", "The server address in the format of host:port")
 	flag.Parse()
 
